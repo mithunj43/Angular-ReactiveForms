@@ -1,13 +1,21 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 
 import { Customer } from './customer';
+
+function ratingRange(c: AbstractControl): { [key: string]: boolean } | null {
+  if (c.value != null && (isNaN(c.value) || c.value < 1 || c.value > 5)) {
+    return { 'range': true }
+  }
+  return null;
+}
 
 @Component({
   selector: 'app-customer',
   templateUrl: './customer.component.html',
   styleUrls: ['./customer.component.css']
 })
+
 export class CustomerComponent implements OnInit {
   customerForm: FormGroup;
   customer = new Customer();
@@ -21,7 +29,8 @@ export class CustomerComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       phone: '',
       notification: 'email',
-      sendCatalog: true
+      sendCatalog: true,
+      rating: [null, ratingRange]
     });
   }
 
@@ -43,17 +52,16 @@ export class CustomerComponent implements OnInit {
     this.customerForm.patchValue({
       firstName: 'Pooja',
       lastName: 'Mithun',
-      sendCatalog: false
+      sendCatalog: false,
     })
   }
 
-  setNotification(notifyVia:string):void{
+  setNotification(notifyVia: string): void {
     const phoneControl = this.customerForm.get('phone');
-    if(notifyVia === 'text')
-    {
+    if (notifyVia === 'text') {
       phoneControl.setValidators(Validators.required)
     }
-    else{
+    else {
       phoneControl.clearValidators();
     }
     phoneControl.updateValueAndValidity();
