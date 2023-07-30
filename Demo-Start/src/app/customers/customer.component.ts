@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, AbstractControl, ValidatorFn, FormArray  } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, AbstractControl, ValidatorFn, FormArray } from '@angular/forms';
 import { debounceTime } from 'rxjs';
 
 import { Customer } from './customer';
@@ -45,8 +45,8 @@ export class CustomerComponent implements OnInit {
 
   constructor(private fb: FormBuilder) { }
 
-  get addresses():FormArray{
-    return <FormArray> this.customerForm.get('addresses');
+  get addresses(): FormArray {
+    return <FormArray>this.customerForm.get('addresses');
   }
 
   ngOnInit(): void {
@@ -117,7 +117,7 @@ export class CustomerComponent implements OnInit {
     phoneControl.updateValueAndValidity();
   }
 
-  buildAddress():FormGroup{
+  buildAddress(): FormGroup {
     return this.fb.group({
       addressType: 'home',
       street1: '',
@@ -126,5 +126,9 @@ export class CustomerComponent implements OnInit {
       state: '',
       zip: ''
     })
+  }
+
+  addAddress(): void {
+    this.addresses.push(this.buildAddress());
   }
 }

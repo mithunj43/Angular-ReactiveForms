@@ -165,8 +165,8 @@
       </div>
 
       <div *ngIf="customerForm.get('sendCatalog').value">
-        <div formArrayName="addresses" 
-          *ngFor="let address of addresses.controls; let i=index">
+        <div formArrayName="addresses"
+             *ngFor="let address of addresses.controls; let i=index">
           <div [formGroupName]="i">
             <div class="form-group row mb-2">
               <label class="col-md-2 col-form-label pt-0">Address Type</label>
@@ -177,8 +177,7 @@
                            id="addressType1Id"
                            type="radio"
                            value="home"
-                           formControlName="addressType"
-                           name="addressType"> Home
+                           formControlName="addressType"> Home
                   </label>
                 </div>
                 <div class="form-check form-check-inline">
@@ -187,8 +186,7 @@
                            id="addressType1Id"
                            type="radio"
                            value="work"
-                           formControlName="addressType"
-                           name="addressType"> Work
+                           formControlName="addressType"> Work
                   </label>
                 </div>
                 <div class="form-check form-check-inline">
@@ -197,8 +195,7 @@
                            id="addressType1Id"
                            type="radio"
                            value="other"
-                           formControlName="addressType"
-                           name="addressType"> Other
+                           formControlName="addressType"> Other
                   </label>
                 </div>
               </div>
@@ -271,6 +268,18 @@
             </div>
           </div>
         </div>
+
+        <div class="form-group row mb-2">
+          <div class="col-md-4">
+            <button class="btn btn-outline-primary"
+                    type="button"
+                    [disabled]="!addresses.valid"
+                    (click)="addAddress()">
+              Add
+            </button>
+          </div>
+
+        </div>
       </div>
 
       <div class="form-group row mb-2">
@@ -296,4 +305,5 @@
 <br>Dirty: {{ customerForm.dirty }}
 <br>Touched: {{ customerForm.touched }}
 <br>Valid: {{ customerForm.valid }}
+<br>Street1: {{ addresses.get('0.street1')?.value }}
 <br>Value: {{ customerForm.value | json }}
